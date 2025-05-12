@@ -1,1 +1,1 @@
-- [1.HomeAssist笔记](docs/homeAssist/HomeAssistant教程.md)
+- [1.HomeAssist笔记](homeAssist/HomeAssist教程.md)
