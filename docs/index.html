@@ -10,30 +10,39 @@
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet"
     href="//cdn.jsdelivr.net/npm/docsify@4.11.4/themes/vue.css" />
+  <!-- Themes (light + dark) -->
+  <!-- <link rel="stylesheet" media="(prefers-color-scheme: dark)"
+    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"> -->
+  <link rel="stylesheet" media="(prefers-color-scheme: light)"
+    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 </head>
+
 
 <body>
   <div id="app">Please wait...</div>
   <script>
     window.$docsify = {
-      name: 'tkang',
-      coverpage: true,
+      name: '目录',
+      coverpage: {
+        '/': '_coverpage.md',
+        '/zh-cn/': 'coverpage.md'
+      },
+      onlyCover: true,
       repo: 'https://github.com/tkang4912/knowledgeRepository', // 仓库链接，会显示在右上角GitHub图标
-      loadNavbar: true,
+      loadNavbar: false,
       loadSidebar: true,
       subMaxLevel: 3,
       search: {
         paths: 'auto',
         placeholder: 'Type to search',
         noData: '找不到结果',
-        depth: 3,
+        depth: 2,
       },
-      toc: {
-        tocMaxLevel: 5,
-        target: 'h1, h2, h3, h4, h5, h6',
-        ignoreHeaders: ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
-      },
-
+      // toc: {
+      //   tocMaxLevel: 5,
+      //   target: 'h1, h2, h3, h4, h5, h6',
+      //   ignoreHeaders: ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
+      // },
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4.11.4"></script>
@@ -59,6 +68,26 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script
     src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+  <!-- Required -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/docsify@4.11.4/lib/docsify.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+
+  <!-- Recommended -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/docsify@4.11.4/lib/plugins/search.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/docsify@4.11.4/lib/plugins/zoom-image.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var searchs = document.querySelectorAll("aside .search");
+      for (var i = 0; i < searchs.length-1; i++) {
+        searchs[i].remove();
+      }
+    });
+  </script>
 </body>
 
 </html>

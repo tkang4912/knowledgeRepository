@@ -1,0 +1,35 @@
+body {
+    background-color: #2b2b2b;
+    color: #a9b7c6;
+}
+
+.markdown-section {
+    background-color: #2b2b2b;
+    color: #a9b7c6;
+    padding: 20px;
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5,
+.markdown-section h6 {
+    color: #ffc66d;
+}
+
+a {
+    color: #6897bb;
+}
+
+pre,
+code {
+    background-color: #3c3f41 !important;
+    color: #a9b7c6 !important;
+}
+
+blockquote {
+    border-left: 4px solid #616161;
+    color: #bbbbbb;
+    background-color: #323232;
+}
