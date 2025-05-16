@@ -17,7 +17,9 @@
 
 步骤
 
-1. ### [百度网盘下载](https://pan.baidu.com/s/1MpQKqQ-_BxXGvPSzw73PeQ?pwd=mf7k)vbox与官方虚拟硬盘文件压缩包,解压压缩包(也可以自行下载官网镜像)
+1. ### [百度网盘下载](https://pan.baidu.com/s/1MpQKqQ-_BxXGvPSzw73PeQ?pwd=mf7k)
+
+   ​	vbox与官方虚拟硬盘文件压缩包,解压压缩包(也可以自行下载官网镜像)
 
 2. ### 创建虚拟机
 
@@ -128,6 +130,8 @@
 <img  src="resource\pic\df11e8ea-a6ad-4964-a9a9-16aa24421333.png" alt="image-20250513213620193" style="zoom:67%;">
 
 <img src="resource\pic\65fdf2d5-c259-4098-a271-37149968384e.png" alt="65fdf2d5-c259-4098-a271-37149968384e" style="zoom:67%;" >
+
+​	下载需要等一会，界面显示20分钟，我等了2个小时
 
 常见问题
 
