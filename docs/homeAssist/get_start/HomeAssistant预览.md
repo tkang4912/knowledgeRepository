@@ -27,7 +27,7 @@
 	2.1 点击新建
 ```
 
-<img src="resource\pic\image-20250513190658727.png" alt="image-20250513190658727" style="zoom:67%;"/>
+<img src="../../resource\pic\image-20250513190658727.png" alt="image-20250513190658727" style="zoom:67%;"/>
 
 ​	
 

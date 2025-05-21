@@ -27,7 +27,7 @@
 3.如果设备没有被自动探查从来，在右下方拐角处，点击添加集成。
 4.在搜索页面输入workday,点击
 
-![img](../resource/pic/QQ_1747450610711.png)5.为它配置一个名字，例如明日工作，然后选择国家
+![img](../../resource/pic/QQ_1747450610711.png)5.为它配置一个名字，例如明日工作，然后选择国家
 
 - 当地假期由国家决定
 
@@ -78,7 +78,7 @@
 
 4.更改集成
 
-  1. 修改名称可以点击三点菜单<img src="../resource/pic/QQ_1747454890389.png" alt="img" style="zoom: 67%;" />，然后点击修改名称。
+  1. 修改名称可以点击三点菜单<img src="../../resource/pic/QQ_1747454890389.png" alt="img" style="zoom: 67%;" />，然后点击修改名称。
 
      ![Screenshot of the entities list, filtered for workday](https://www.home-assistant.io/images/getting-started/workday_three_dots.png)
 

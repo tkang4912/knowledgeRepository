@@ -6,7 +6,7 @@
 
 可以在此处点击语言模式
 
-![img](../resource/pic/QQ_1747277595181.png)
+![img](../../resource/pic/QQ_1747277595181.png)
 
 ## 仪表盘 卡片 视图
 
@@ -72,11 +72,11 @@
 
 1. 在设置->仪表盘中点击新建仪表盘
 
-   ![img](../resource/pic/QQ_1747277828437.png)
+   ![img](../../resource/pic/QQ_1747277828437.png)
 
 2. 在弹框中，点击默认仪表盘
 
-   ![img](../resource/pic/QQ_1747277464036.png)
+   ![img](../../resource/pic/QQ_1747277464036.png)
 
 3. 在添加仪表盘对话框中，输出仪表盘名和图标
 
@@ -86,7 +86,7 @@
 
    - 最后会在左侧侧边栏中显示。
 
-     ![img](../resource/pic/QQ_1747278345244.png)
+     ![img](../../resource/pic/QQ_1747278345244.png)
 
 4. 左侧侧边栏打开你新建的仪表盘，并在屏幕右上方点击 <img src="https://www.home-assistant.io/images/blog/2024-03-dashboard-chapter-1/mdi-edit.png" alt="Edit icon" style="zoom: 50%;" /> 按钮。
 
@@ -94,7 +94,7 @@
 
    - 新仪表盘组件（包括各种卡片，图标等）可以使用时候不再自动添加到仪表盘。
 
-   - 随后，在弹出框中点击<img src="../resource/pic/QQ_1747279165075.png" alt="img" style="zoom: 50%;" />接管。
+   - 随后，在弹出框中点击<img src="../../resource/pic/QQ_1747279165075.png" alt="img" style="zoom: 50%;" />接管。
    - 在确认前点击阅读并接受。
    - 从此你不能让仪表板自动恢复更新。但是，您可以创建一个新的默认仪表板
 
@@ -107,7 +107,7 @@
 7. 接下来，举个例子，编辑天气卡片。
 
    - 点击天气卡片。
-   - 然后，点击齿轮<img src="../resource/pic/QQ_1747279928272.png" alt="img" style="zoom:50%;" />。
+   - 然后，点击齿轮<img src="../../resource/pic/QQ_1747279928272.png" alt="img" style="zoom:50%;" />。
 
 8. 更改你想改的选项
 
@@ -119,7 +119,7 @@
 
 9. 接下来，我们为天气服务添加一个新卡片
 
-   - 再次点击天气卡片，点击<img src="../resource/pic/{A81FF09F-D555-40B0-82D0-FB22EA0AB04D}" alt="img" style="zoom:50%;" />，然后点击设备信息
+   - 再次点击天气卡片，点击<img src="../../resource/pic/{A81FF09F-D555-40B0-82D0-FB22EA0AB04D}" alt="img" style="zoom:50%;" />，然后点击设备信息
    - 在传感器下，点击添加到，点击添加到仪表盘，然后点击不同的卡片。
    - ![Dashboard - change the card type](https://www.home-assistant.io/images/getting-started/onboarding_pick_different_card_01.png)
 
