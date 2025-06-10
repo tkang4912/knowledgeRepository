@@ -1,10 +1,10 @@
 # 自动化YAML
 
-**自动化功能可以通过UI界面在HA中创建，存储在YAML格式的文件中。如果你想编辑YAML来控制自动化，选择自动化，右上方处点击编辑YAML。**
+**在HA中,自动化功能可以通过UI界面创建，但最终创建出来的自动化相关数据最终还是存储在YAML格式的文件中。这说明你也可以编辑YAML格式文件来修改自动化，如果你想编辑YAML来控制自动化，选择自动化，右上方处点击编辑YAML。不建议UI与YAML两种创建自动化的方式混用。**
 
-UI的方式将您的自动化写入`automation.yaml`。该文件只通过UI方式管理，不应该手动编辑。
+UI方式将您的自动化信息写入`automation.yaml`。该文件只通过UI方式管理，**不应该手动编辑**。
 
-如果确实需要手动编写方式实现自动化，在`configuration.yaml`中添加`automation`这个标签块，或者其他 YAML 文件中写入自动化内容。
+如果确实需要手动编写方式实现自动化，在`configuration.yaml`中添加`automation`这个标签块，或者新建其他 YAML 文件，在其中写入你的自动化内容。
 
 ![img](../../../resource/pic/QQ_1747812521490.png)
 
@@ -44,6 +44,8 @@ automation kitchen:
 ------
 
 ### `mode`（可选，默认：`single`）
+
+考虑以下情况，你的自动化正在运行，然后同一个自动化又一次被触发。
 
 控制当自动化正在运行时再次被触发会发生什么情况。支持以下几种模式：
 
@@ -93,7 +95,7 @@ automation kitchen:
 可以添加到 configuration.yaml 中 的YAML 自动化模板示。
 
 ```yml
-# Example of entry in configuration.yaml
+# 示例
 automation my_lights:
   # Turns on lights 1 hour before sunset if people are home
   # and if people get home between 16:00-23:00

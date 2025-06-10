@@ -36,7 +36,9 @@
 
 对于触发器来说变量有两种不同的类型。但它们都可以像脚本级别的变量一样工作。
 
-第一种方法定义的变量（ my_event: example_event），这种变量必须现在trigger_variables下定义，默认也是trigger_variables前缀（ trigger_variables.my_event），该变量为[受限变量](http://home-assistant.io/docs/configuration/templating/#limited-templates)，例如只在 **自动化加载时计算一次**，不会动态响应变量变化。
+第一种方法定义的变量（ my_event: example_event），这种变量必须现在trigger_variables下定义，默认也是trigger_variables前缀
+
+（ trigger_variables.my_event），该变量为[受限变量](http://home-assistant.io/docs/configuration/templating/#limited-templates)，例如只在 **自动化加载时计算一次**，不会动态响应变量变化。
 
 第二种方法定义的变量较为简单：允许你在触发器触发时候获取值，可以使用双括号的方式（下称模版方法{{}}）来获取值，例如name: "{{ trigger.event.data.name }}"。
 
@@ -260,7 +262,7 @@ automation:
 当实体改变时候，`for`中模板就会重新计算。
 
 
-for中设置的时间在HA重启或者重新加载自动化的时候会自动重置。如果不想被重置，可以使用将 input_datetime设置为所需时间，然后使用该 [input_datetime](https://www.home-assistant.io/integrations/input_datetime) 作为自动化触发器，在设定的时间执行所需的操作。
+for中设置的时间在HA重启或者重新加载自动化的时候会自动重置。如果不想被重置，可以使用将 input_datetime设置为所需时间，然后使用该 [input_datetime](https://www.home-assistant.io/integrations/input_datetime) 作为自动化触发器，在设定的时间执行所需的动作。
 
 ## 状态触发器
 
@@ -271,7 +273,7 @@ for中设置的时间在HA重启或者重新加载自动化的时候会自动重
   - 如果想要状态改变时候触发，不论状态变成什么而不是在设置的属性值改变时触发，可以把`from`,`to`,`no_from`,或者`not_to`其中至少一个设置为null。
 - 使用 for 选项无法在 Home Assistant 重启或自动化重新加载后继续运行。
   -  在重新加载与重新启动时候，`for`的等待时候会被重置。
-  - 如果你不像触发器这样执行，可以使用自动化将 input_datetime 设置为所需的时间，然后使用该 input_datetime 作为自动化触发器，在设定的时间执行所需的操作。
+  - 如果你不像触发器这样执行，可以使用自动化将 input_datetime 设置为所需的时间，然后使用该 input_datetime 作为自动化触发器，在设定的时间执行所需的动作。
 
 ### 示例
 
@@ -706,7 +708,7 @@ curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' https:/
 
 Webhook 端点不需要身份验证，除非知道有效的 Webhook ID。Webhook 的安全最佳实践包括：
 
-- 不要使用 Webhook 触发具有破坏性的自动化操作，否则可能会造成安全问题。例如，不要使用 Webhook 来解锁或打开车库门。
+- 不要使用 Webhook 触发具有破坏性的自动化动作，否则可能会造成安全问题。例如，不要使用 Webhook 来解锁或打开车库门。
 - 将 Webhook ID 视为密码：使用很难猜出来的值，而且要保密，不要与你的其它密码相同。
 - 不要复制粘贴来自公共来源 (包括蓝图) 的 Webhook ID。始终创建你自己的。
 - 如果不需要来自互联网的访问，请为 Webhook 启用 local_only 选项。
@@ -891,7 +893,7 @@ triggers:
   - triggers: !input usertrigger
 ```
 
-这个蓝图自动化可以由固定的 manual_event 触发器触发，也可以由触发器选择器中选择的任何触发器触发。这也适用于 wait_for_trigger 操作。
+这个蓝图自动化可以由固定的 manual_event 触发器触发，也可以由触发器选择器中选择的任何触发器触发。这也适用于 wait_for_trigger 动作。
 
 
 

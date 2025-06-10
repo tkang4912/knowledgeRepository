@@ -1,6 +1,6 @@
 # 自动化触发条件
 
-触发条件是自动化法则的一个可选部分。触发条件可以用于组织自动化操作的执行。在触发器执行后，所有触发条件将进行执行测试。只有在通过所有测试后，自动化才将执行。
+触发条件是自动化法则的一个可选部分。触发条件可以用于组织自动化动作的执行。在触发器执行后，所有触发条件将进行执行测试。只有在满足所有触发条件后，自动化才将执行。
 
 触发条件看起来与触发器非常相似，但它们又非常不同触发器会（主动）观察系统中发生的事件，而触发条件只关注触发器触发后的系统的状态（被动）。触发器可以观察到开关被打开，条件只能看到开关当前是开还是关。
 
@@ -42,5 +42,674 @@ automation:
       - action: scene.turn_on
         target:
           entity_id: scene.office_lights
+```
+
+# 条件
+
+条件用在脚本或者自动化中可以阻止即将发生的操作。当条件符合的时候（值为true），脚本或者自动化会执行。如果是其他的值，脚本者自动化不会执行。条件判断时候将会查找此时系统中的值，举个例子，一个条件可以判断当前的开关是打开还是关闭的。
+
+条件语法不同于触发器，触发器之间的关系始终是或，一个可以触发就行，条件是并且，默认情况下是 —— 所有条件都必须符合（为true）。
+
+所有的条件都支持别名选项。
+
+
+
+### 条件且（and）
+
+在一个复合条件（conditions ）中有多个条件（condition ）语句。只有在其中的每个条件都符合时候才通过。
+
+```yaml
+conditions:
+  - alias: "Paulus home AND temperature below 20"
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: "device_tracker.paulus"
+        state: "home"
+      - condition: numeric_state
+        entity_id: "sensor.temperature"
+        below: 20
+        
+```
+
+以下示例同上
+
+```yaml
+conditions:
+  - condition: state
+    entity_id: "device_tracker.paulus"
+    state: "home"
+  - condition: numeric_state
+    entity_id: "sensor.temperature"
+    below: 20
+```
+
+目前，您需要像这样格式化您的条件，才能使用自动化编辑器进行编辑。
+
+AND 条件也有简写形式。以下配置的工作原理与上面列出的配置相同：
+
+```yml
+conditions:
+  alias: "Paulus home AND temperature below 20"
+  - and:
+    - condition: state
+      entity_id: "device_tracker.paulus"
+      state: "home"
+    - condition: numeric_state
+      entity_id: "sensor.temperature"
+      below: 20
+```
+
+### 或（or）条件
+
+一个复合条件语句中有多个子条件。只有其中子条件一个符合，复合条件就可以通过。
+
+```yml
+conditions:
+  - alias: "Paulus home OR temperature below 20"
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: "device_tracker.paulus"
+        state: "home"
+      - condition: numeric_state
+        entity_id: "sensor.temperature"
+        below: 20
+```
+
+或条件也有简写形式，以下示例的配置格式与上例相同。
+
+```yml
+conditions:
+  - alias: "Paulus home OR temperature below 20"
+    or:
+      - condition: state
+        entity_id: "device_tracker.paulus"
+        state: "home"
+      - condition: numeric_state
+        entity_id: "sensor.temperature"
+        below: 20
+```
+
+### 或条件与且条件混合使用
+
+在一个条件声明中测试多个 AND 和 OR 条件。如果任何子条件为真，则通过。这允许你将多个 AND 和 OR 条件混合在一起。
+
+```yml
+conditions:
+  - condition: and
+    conditions:
+      - condition: state
+        entity_id: "device_tracker.paulus"
+        state: "home"
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: sensor.weather_precip
+            state: "rain"
+          - condition: numeric_state
+            entity_id: "sensor.temperature"
+            below: 20
+```
+
+或者使用and与or的简写形式
+
+```yml
+conditions:
+  - and:
+    - condition: state
+      entity_id: "device_tracker.paulus"
+      state: "home"
+    - or:
+      - condition: state
+        entity_id: sensor.weather_precip
+        state: "rain"
+      - condition: numeric_state
+        entity_id: "sensor.temperature"
+        below: 20
+```
+
+###  非条件（not condition）。
+
+判断复合条件语句，如果所有子条件都不复合条件，则通过。
+
+```yml
+conditions:
+  - alias: "Paulus not home AND alarm not disarmed"
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: device_tracker.paulus
+        state: "home"
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: "disarmed"
+```
+
+同理，非条件也有简写，以下实例作用同上
+
+```yml
+conditions:
+  alias: "Paulus not home AND alarm not disarmed"
+  not:
+    - condition: state
+      entity_id: device_tracker.paulus
+      state: "home"
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: disarmed
+```
+
+ ## 数值条件
+
+这种类型的条件将把实体的状态或者属性解析成一个数值，并且在该数值符合你配置的范围时候触发。（`above `、`below`两个关键字不匹配等于的情况，在相等时候不会触发自动化 ）
+
+如果最大值（`above`）和最小值（`below`）都指定了，则两个条件都必须满足（默认为且条件）。
+
+```yml
+conditions:
+  - alias: "Temperature between 17 and 25 degrees"
+    condition: numeric_state
+    entity_id: sensor.temperature
+    above: 17
+    below: 25
+```
+
+你可以使用数值模版（`value_template`）来解析数值，解析过程在判断流程前。（常见单位换算，如摄氏度华氏度互相转化）
+
+```yml
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.temperature
+    above: 17
+    below: 25
+    # If your sensor value needs to be adjusted
+    value_template: "{{ float(state.state) + 2 }}"
+```
+
+也可以同时对多个实体测试该条件。如果所有实体都符合条件就通过。
+
+```yml
+conditions:
+  - condition: numeric_state
+    entity_id:
+      - sensor.kitchen_temperature
+      - sensor.living_room_temperature
+    below: 18
+```
+
+也可以根据实体的属性进行判断。如果实体的属性值都符合条件就返回。
+
+```yml
+conditions:
+  - condition: numeric_state
+    entity_id: climate.living_room_thermostat
+    attribute: temperature
+    above: 17
+    below: 25
+```
+
+数值助手 (`input_number` 实体)， 数值`number`， 传感器（`sensor`和区域 （`zone`） 实体都有数值,这些数值都可以作为`above`和`below`的值，这可以让条件更加多变。
+
+## 状态条件
+
+判断某个实体是否具有指定状态。如下例子是判断Paulus已经离家一个小时十分钟了
+
+```yml
+conditions:
+  - alias: "Paulus not home for an hour and a bit"
+    condition: state
+    entity_id: device_tracker.paulus
+    state: "not_home"
+    # optional: Evaluates to true only if state was this for last X time.
+    for:
+      hours: 1
+      minutes: 10
+      seconds: 5
+```
+
+也可以同时对多个实体进行条件判断。如果所有实体都与状态匹配，该条件将通过。（默认是且逻辑）
+
+```yml
+conditions:
+  - condition: state
+    entity_id:
+      - light.kitchen
+      - light.living_room
+    state: "on"
+```
+
+有时候你可能想只要其中一个条件符合就通过，这个时候应该使用match：any（或逻辑）
+
+```yml
+conditions:
+  - condition: numeric_state
+    entity_id:
+      - sensor.kitchen_temperature
+      - sensor.living_room_temperature
+    below: 18
+```
+
+简写形式
+
+```yml
+conditions:
+  - condition: state
+    entity_id: alarm_control_panel.home
+    state:
+      - "armed_away"
+      - "armed_home"
+```
+
+可以将多个实体的多个状态结合使用。在下面的例子中，两个播放器都需要满足同时播放或者同时暂停才可以通过条件判断。
+
+```yml
+conditions:
+  - condition: state
+    entity_id:
+      - media_player.living_room
+      - media_player.kitchen
+    state:
+      - "playing"
+      - "paused"
+```
+
+或者，条件可以根据状态属性进行判断，判断属性是否匹配的状态。
+
+```yml
+conditions:
+  - condition: state
+    entity_id: climate.living_room_thermostat
+    attribute: fan_mode
+    state: "auto"
+```
+
+最后，state 选项接受辅助实体 (也称为·`input_*` 实体)。如果实体的状态与给定辅助实体的状态相匹配，则该条件将通过。(辅助实体是homeassist中用户自定义的数值，用于简化自动化的使用，添加方式 `设置 → 设备与服务 → 辅助实体 → 添加`)
+
+```yml
+conditions:
+  - condition: state
+    entity_id: alarm_control_panel.home
+    state: input_select.guest_mode
+```
+
+你可以在`for`中使用数值模板
+
+```yml
+conditions:
+  - condition: state
+    entity_id: device_tracker.paulus
+    state: "home"
+    for:
+      minutes: "{{ states('input_number.lock_min')|int }}"
+      seconds: "{{ states('input_number.lock_sec')|int }}"
+```
+
+`for`中的数值模板将在条件判断后执行
+
+### 日光状态条件
+
+#### 太阳状态条件
+
+太阳状态条件可以用来判断太阳是否已经落山或升起。
+
+```yml
+conditions:
+  - alias: "Sun up"
+    condition: state  # 'day' condition: from sunrise until sunset
+    entity_id: sun.sun
+    state: "above_horizon"
+```
+
+```yml
+conditions:
+  - alias: "Sun down"
+    condition: state  # from sunset until sunrise
+    entity_id: sun.sun
+    state: "below_horizon"
+```
+
+#### 太阳高度角条件
+
+太阳高度可以用来测试太阳是否已经落山或升起，当触发器出现时是黄昏还是夜晚等。有关太阳高度的深入解释，请参阅太阳高度触发器。
+
+```yml
+conditions:
+  - condition: and  # 'twilight' condition: dusk and dawn, in typical locations
+    conditions:
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') < 0 }}"
+      - condition: template
+        value_template: "{{ state_attr('sun.sun', 'elevation') > -6 }}"
+```
+
+```yml
+conditions:
+  condition: template  # 'night' condition: from dusk to dawn, in typical locations
+  value_template: "{{ state_attr('sun.sun', 'elevation') < -6 }}"
+```
+
+#### 日升日落条件
+
+当触发器触发时，太阳状态条件可以判断太阳是升起还是落下。`before`和`after`的关键字可以且仅可以在sunset和sunrise下使用。它们有相应的可选偏移值 (before_offset、after_offset), 可以添加，类似于太阳触发器。
+
+注意仅使用`before`关键字的时候，在午夜到太阳升起或太阳落下时该条件判断为真。仅使用`after`关键字的时候，在太阳升起或太阳落下到午夜时候，该条件判断为真。如果两个关键字都使用的话，这种情况在午夜到日出，从日落持续到午夜判断为真。
+
+以下是日落前一小时的示例。
+
+```yml
+conditions:
+  - condition: sun
+    after: sunset
+    after_offset: "-01:00:00"
+```
+
+在天黑时候，等同于太阳在日落后在日出前
+
+```yaml
+conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+```
+
+在天亮时等同于在日出后到日落后的状态
+
+conditions:  - condition: sun    after: sunrise    before: sunset
+
+```yaml
+conditions:
+  - condition: sun
+    after: sunrise
+    before: sunset
+```
+
+下面提供了一个可视化时间线，显示了这些条件何时为真的示例。在这张图中，日出时间为 6:00, 日落时间为 18:00 (下午 6:00)。图中的绿色区域表示指定条件何时为真。
+
+<img src="https://www.home-assistant.io/images/docs/scripts/sun-conditions.svg" alt="Graphic showing an example of sun conditions" style="zoom:150%;" />
+
+## 模板条件
+
+模板条件将判断给定的模板执行后结果是否为真。当然你给定的模板必须返回true或者false这类布尔意义的值，这个值是 **布尔意义上的真值**（即不是空字符串、0、False、None。
+
+```yml
+conditions:
+  - alias: "Iphone battery above 50%"
+    condition: template
+    value_template: "{{ (state_attr('device_tracker.iphone', 'battery_level')|int) > 50 }}
+```
+
+在自动化中，模板条件也可以访问之前定义的触发器变量。该功能一般用于判断多个触发条件中的真正触发条件
+
+示例场景：根据哪个实体触发决定是否执行
+
+```
+automation:
+  - alias: "某个门打开才执行"
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.door_1
+          - binary_sensor.door_2
+        to: "on"
+    condition:
+      - condition: template
+        value_template: >
+          {{ trigger.entity_id == 'binary_sensor.door_1' }}
+    action:
+      - service: notify.mobile_app
+        data:
+          message: "Door 1 was opened!"
+
+```
+
+##### 常见的 `trigger` 属性
+
+| 属性                 | 说明                                                  |
+| -------------------- | ----------------------------------------------------- |
+| `trigger.entity_id`  | 触发自动化的实体 ID                                   |
+| `trigger.platform`   | 触发方式（如 `state`、`time` 等）                     |
+| `trigger.from_state` | 状态变化前的状态对象                                  |
+| `trigger.to_state`   | 状态变化后的状态对象                                  |
+| `trigger.for`        | 如果使用 `for:`，这个字段会有持续时间信息             |
+| `trigger.id`         | 如果多个 trigger 有 ID，可以知道是哪个 trigger 激活的 |
+
+##### 模板方法的简写形式
+
+模板方法也有简写形式，这可以让你的脚本或者自动化更简洁。
+
+举个例子
+
+```yaml
+conditions: "{{ (state_attr('device_tracker.iphone', 'battery_level')|int) > 50 }}"
+```
+或者在条件列表中，允许使用本章所述的现有条件和一个或多个简写模板条件
+
+```yml
+conditions:
+  - "{{ (state_attr('device_tracker.iphone', 'battery_level')|int) > 50 }}"
+  - condition: state
+    entity_id: alarm_control_panel.home
+    state: armed_away
+  - "{{ is_state('device_tracker.iphone', 'away') }}"
+```
+
+这种简写符号可以在HA中任何可以使用条件的位置使用。例如，在`and`、`or`、`not`条件下：
+
+```yml
+conditions:
+  - condition: or
+    conditions:
+      - "{{ is_state('device_tracker.iphone', 'away') }}"
+      - condition: numeric_state
+        entity_id: "sensor.temperature"
+        below: 20
+```
+
+它还支持重复(`repeat`)操作的 “while” 或 “until” 选项，或选择（`choose`）动作的 `conditions` 选项：
+
+```yml
+- while: "{{ is_state('sensor.mode', 'Home') and repeat.index < 10 }}"
+  sequence:
+    - ...
+```
+
+它还支持脚本或自动化中的条件操作：
+
+```yml
+- condition: "{{ is_state('device_tracker.iphone', 'away') }}"
+```
+
+## 时间条件
+
+时间条件将判断是否是指定的时间，可以是特定时间范围或者一周中的某一天。
+
+```yml
+conditions:
+  - alias: "Time 15~02"
+    condition: time
+    # At least one of the following is required.
+    after: "15:00:00"
+    before: "02:00:00"
+    weekday:
+      - mon
+      - wed
+      - fri
+```
+
+工作日的有效值为 `mon`、`tu`、`wed`、 `thu`、`fri`、`sat`、`sun`。请注意，如果仅使用`before`关键字，**条件将从午夜到指定时间为真**。如果仅使用关键字`after`，**条件将从指定时间到午夜为真**。如果两个关键字都使用，时间条件范围可以跨越午夜这个界限。在上面的示例中，时间条件从下午 3 点到凌晨 2 点
+
+
+
+<div class="note">
+  <strong>ℹ️  请注意</strong><br>
+  时间条件仅考虑时间。如果引用的传感器或辅助实体包含带有日期的时间戳，则日期部分将完全被忽略。
+</div>
+
+
+
+**使用 [Workday Binary Sensor](https://www.home-assistant.io/integrations/workday/)可能是一个更好的工作日条件。**
+
+
+
+对于`after`和`before`选项，可以使用时间助手（`input_datetime`实体）、`time`实体或`sensor`包含具有“时间戳”设备类的时间戳的其他实体。
+
+```yml
+conditions:
+  - alias: "Example referencing a time helper"
+    condition: time
+    after: input_datetime.house_silent_hours_start
+    before: input_datetime.house_silent_hours_end
+
+  - alias: "Example referencing a time entity"
+    before: time.dnd_start
+
+  - alias: "Example referencing another sensor"
+    after: sensor.groceries_delivery_time
+```
+
+## 触发条件
+
+触发条件可以判断自动化是否由某个触发器触发，由触发器的 标识`id`
+
+```yml
+conditions:
+  - condition: trigger
+    id: event_trigger
+```
+
+对于由索引标识的触发器，允许使用字符串和整数：
+
+```yml
+conditions:
+  - condition: trigger
+    id: "0"
+```
+
+```yml
+conditions:
+  - condition: trigger
+    id: 0
+```
+可以使用多个触发器构成的列表
+```yml
+conditions:
+  - condition: trigger
+    id:
+      - event_1_trigger
+      - event_2_trigger
+```
+
+## 区域条件
+
+区域条件会判断实体是否位于特定区域。为了使区域自动化功能正常工作，需要设置一个支持报告 GPS 坐标的设备追踪器平台。
+
+```yml
+conditions:
+  - alias: "Paulus at home"
+    condition: zone
+    entity_id: device_tracker.paulus
+    zone: zone.home
+```
+
+也可以同时针对多个实体测试该条件。如果所有实体都位于指定区域内，则条件成立。
+
+```yml
+conditions:
+  - condition: zone
+    entity_id:
+      - device_tracker.frenck
+      - device_tracker.daphne
+    zone: zone.home
+```
+
+测试实体是否与一组可能的区域匹配；如果实体位于其中一个区域，则条件将通过。
+
+```yml
+conditions:
+  - condition: zone
+    entity_id: device_tracker.paulus
+    state:
+      - zone.home
+      - zone.work
+```
+
+或者，将多个实体与多个区域组合。在以下示例中，两个实体都需要位于家庭区域或工作区域，条件才会满足。
+
+```yml
+conditions:
+  condition: zone
+  entity_id:
+    - device_tracker.frenck
+    - device_tracker.daphne
+  state:
+    - zone.home
+    - zone.work
+```
+
+示例
+
+```yml
+conditions:
+  - condition: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    below: 1
+  - condition: state
+    entity_id: light.living_room
+    state: "off"
+  - condition: time
+    before: "23:00:00"
+    after: "14:00:00"
+  - condition: state
+    entity_id: script.light_turned_off_5min
+    state: "off"
+```
+
+## 禁用条件
+
+每个单独的条件都可以禁用，而无需将其移除。为此，请将其添加`enabled: false`到条件配置中。
+
+如果想暂时禁用某个条件（例如，为了测试），此功能会非常有用。禁用的条件将被移除表现得一样。
+
+例如：
+
+```yml
+# This condition will always pass, as it is disabled.
+conditions:
+  - enabled: false
+    condition: state
+    entity_id: sun.sun
+    state: "above_horizon"
+```
+
+还可以根据受限模板或蓝图输入禁用条件。
+
+```yml
+blueprint:
+  input:
+    input_boolean:
+      name: Boolean
+      selector:
+        boolean:
+    input_number:
+      name: Number
+      selector:
+        number:
+          min: 0
+          max: 100
+
+  trigger_variables:
+    _enable_number: !input input_number
+
+  conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "above_horizon"
+      enabled: !input input_boolean
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+      enabled: "{{ _enable_number < 50 }}"
 ```
 

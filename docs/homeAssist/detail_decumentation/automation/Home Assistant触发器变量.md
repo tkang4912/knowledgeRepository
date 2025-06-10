@@ -1,4 +1,4 @@
-# 自动化触发变量
+# 自动化触发器变量
 
 自动化功能支持[模板的](https://www.home-assistant.io/docs/configuration/templating/)方式与脚本相同。除了脚本可用的[Home Assistant 模板扩展](https://www.home-assistant.io/docs/configuration/templating/#home-assistant-template-extensions)`trigger`之外，还支持和`this`模板变量。
 
@@ -88,11 +88,11 @@
 | `trigger.above`      | 上述阈值（如果有）。                                         |
 | `trigger.from_state` | 实体的先前[状态对象。](https://www.home-assistant.io/docs/configuration/state_object/) |
 | `trigger.to_state`   | 触发触发器的新[状态对象。](https://www.home-assistant.io/docs/configuration/state_object/) |
-| `trigger.for`        | Timedelta 对象表示状态满足以上/以下标准的时间长度（如果有）。 |
+| `trigger.for`        | Timedelta 对象表示设定状态满足的时间长度（如果有）。         |
 
-### 句子
+### 语句
 
-[这些是句子触发器](https://www.home-assistant.io/docs/automation/trigger/#sentence-trigger)可用的属性。
+[这些是语句触发器](https://www.home-assistant.io/docs/automation/trigger/#sentence-trigger)可用的属性。
 
 | 模板变量            | 数据                                                         |
 | :------------------ | :----------------------------------------------------------- |
@@ -191,7 +191,7 @@
 | `trigger.from_state` | 实体的先前[状态对象。](https://www.home-assistant.io/docs/configuration/state_object/) |
 | `trigger.to_state`   | 实体的新[状态对象。](https://www.home-assistant.io/docs/configuration/state_object/) |
 | `trigger.zone`       | 区域的状态对象                                               |
-| `trigger.event`      | 触发观察到的事件：`enter`或`leave`。                         |
+| trigger.event`       | 触发观察到的事件：`enter`或`leave`。                         |
 
 ## 示例
 
