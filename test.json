@@ -1,0 +1,14 @@
+{
+    "name": "67:D2:77:F0:49:54",
+    "address": "67:D2:77:F0:49:54",
+    "rssi": -96,
+    "manufacturer_data": {
+        "2103": "8340646634396366400005746b616e670001fbb96e770000"
+    },
+    "service_data": {},
+    "service_uuids": [],
+    "source": "14:33:5C:0F:5C:CA",
+    "connectable": false,
+    "time": 1747821520.5042033,
+    "tx_power": null
+}
