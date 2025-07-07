@@ -1,4 +1,4 @@
-- [入门指南](homeAssist/get_start/预览.md)
+- [入门指南](homeAssist/get_start/基础概念.md)
   - [HA的基础概念](homeAssist/get_start/基础概念.md)
   - [添加集成](homeAssist/get_start/添加集成.md)
   - [仪表盘编辑](homeAssist/get_start/编辑仪表盘.md)
